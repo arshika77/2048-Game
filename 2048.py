@@ -115,6 +115,10 @@ def startGame():
                 grid = move(grid, dir)
                 grid, loseStatus = addNumber(grid)
                 printGrid(grid)
+                if(move.score == 8):
+                    print("\nFinal score: " + str(move.score))
+                    print("Congratulations!! You Won")
+                    break
                 if loseStatus:
                     print("\nGame Over")
                     print("Final score: " + str(move.score))
