@@ -114,6 +114,7 @@ def startGame():
     loseStatus = 0
     move.score = 0 # Score of the user
     while True:
+        prevGrid = grid.copy()
         tmp = input("\nTo continue, Press L for left, R for right, T for top, B for bottom or\nPress X to end the game.\n")
         if tmp in ["R", "r", "L", "l", "T", "t", "B", "b", "X", "x"]:
             dir = direction[tmp.upper()]
@@ -131,8 +132,14 @@ def startGame():
                 move.score = sumTiles(grid)
                 if(move.score == 8):
                     print("\nFinal score: " + str(move.score))
-                    print("Congratulations!! You Won")
+                    print("\nCongratulations!! You Won")
                     break
+                if(move.score>8):
+                    print("\nCurrent score: " + str(move.score))
+                    grid = prevGrid
+                    print("\nScore is greater than 8. Backtracking ...")
+                    printGrid(grid)
+                    move.score = sumTiles(grid)
                 print("\nCurrent score: " + str(move.score))
         else:
             print("\nInvalid direction, please provide valid movement direction (L, B, R, T).")
