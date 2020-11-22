@@ -46,7 +46,7 @@ def move(grid, dir):
         for j in range(len(temp) - 1):
             if temp[j] == temp[j + 1] and temp[j] != '.' and temp[j + 1] != '.':
                 temp[j] = str(2 * int(temp[j]))
-                move.score += int(temp[j])
+                #move.score += int(temp[j])
                 temp[j + 1] = '.'
         grid[i] = []
         for j in temp:
@@ -55,6 +55,15 @@ def move(grid, dir):
         grid[i] += ['.'] * temp.count('.')
     for i in range(4 - dir): grid = rotate(grid)
     return grid
+
+def sumTiles(grid):
+    sumTile = 0
+    for j in range(len(grid)):
+        for i in range(len(grid[j])):
+            if grid[j][i] != '.':
+                sumTile += int(grid[j][i])
+
+    return sumTile
 
 # Finds empty slot in the game grid
 def findEmptySlot(grid):
@@ -115,13 +124,14 @@ def startGame():
                 grid = move(grid, dir)
                 grid, loseStatus = addNumber(grid)
                 printGrid(grid)
-                if(move.score == 8):
-                    print("\nFinal score: " + str(move.score))
-                    print("Congratulations!! You Won")
-                    break
                 if loseStatus:
                     print("\nGame Over")
                     print("Final score: " + str(move.score))
+                    break
+                move.score = sumTiles(grid)
+                if(move.score == 8):
+                    print("\nFinal score: " + str(move.score))
+                    print("Congratulations!! You Won")
                     break
                 print("\nCurrent score: " + str(move.score))
         else:
