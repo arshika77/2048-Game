@@ -100,15 +100,20 @@ def startGame():
     
     gridStack = []
     gridStack.append(grid)
-    direction = {'L': 0, 'B': 1, 'R': 2, 'T': 3, 'X': 4}
+    #direction = {'L': 0, 'B': 1, 'R': 2, 'T': 3, 'X': 4}
+    direction = ['Left', 'Down', 'Right', 'Up', 'X']
 
     printGrid(grid)
     loseStatus = 0
     move.score = 0 # Score of the user
     while True:
-        tmp = input("\nTo continue, Press L for left, R for right, T for top, B for bottom or\nPress X to end the game.\n")
-        if tmp in ["R", "r", "L", "l", "T", "t", "B", "b", "X", "x"]:
-            dir = direction[tmp.upper()]
+        #tmp = input("\nTo continue, Press L for left, R for right, T for top, B for bottom or\nPress X to end the game.\n")
+        tmp = random.randint(0, 3)
+        #if tmp in ["R", "r", "L", "l", "T", "t", "B", "b", "X", "x"]:
+        if tmp in range(0, 4):
+            #dir = direction[tmp.upper()]
+            dir = tmp
+            print("\nAction: %c", direction[dir])
             if dir == 4:
                 print("\nFinal score: " + str(move.score))
                 break
