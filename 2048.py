@@ -67,6 +67,12 @@ def printGrid(grid):
         print("\n")
     return 0
 
+def backtrack(gridStack, back_count):
+    
+    for i in range(min(len(gridStack), back_count)):
+        grid = gridStack.pop()
+    return grid, gridStack
+
 # Starts the game
 def startGame():
     print("\nWelcome to the 2048 Console world. Let's play!")
@@ -74,18 +80,22 @@ def startGame():
     
     # Create the game grid 
     # The game should work for square grid of any size though
+    
     grid = [['.', '.', '.', '.'],
             ['.', '.', '.', '.'],
             ['.', '.', '.', '.'],
             ['.', '.', '.', '.']]
-
+    for i in range(2):
+        grid, _ = addNumber(grid) #intialize two tiles
+    
+    gridStack = []
+    gridStack.append(grid)
     direction = {'L': 0, 'B': 1, 'R': 2, 'T': 3, 'X': 4}
 
     printGrid(grid)
     loseStatus = 0
     move.score = 0 # Score of the user
     while True:
-        prevGrid = grid.copy()
         tmp = input("\nTo continue, Press L for left, R for right, T for top, B for bottom or\nPress X to end the game.\n")
         if tmp in ["R", "r", "L", "l", "T", "t", "B", "b", "X", "x"]:
             dir = direction[tmp.upper()]
@@ -95,6 +105,7 @@ def startGame():
             else:
                 grid = move(grid, dir)
                 grid, loseStatus = addNumber(grid)
+                gridStack.append(grid)
                 printGrid(grid)
                 if loseStatus:
                     print("\nGame Over")
@@ -107,8 +118,9 @@ def startGame():
                     break
                 if(move.score>8):
                     print("\nCurrent score: " + str(move.score))
-                    grid = prevGrid
-                    print("\nScore is greater than 8. Backtracking ...")
+                    back_count = random.randint(1, 3)
+                    print("\nScore is greater than 8. Backtracking ... %d moves", min(len(gridStack), back_count))
+                    grid, gridStack = backtrack(gridStack, back_count)
                     printGrid(grid)
                     move.score = sumTiles(grid)
                 print("\nCurrent score: " + str(move.score))
