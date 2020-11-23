@@ -113,7 +113,7 @@ def startGame():
         if tmp in range(0, 4):
             #dir = direction[tmp.upper()]
             dir = tmp
-            print("\nAction: %c", direction[dir])
+            print("\nAction: ", direction[dir])
             if dir == 4:
                 print("\nFinal score: " + str(move.score))
                 break
@@ -124,7 +124,7 @@ def startGame():
                 printGrid(grid)
                 if loseStatus:
                     print("\nGame Over")
-                    print("Final score: " + str(move.score))
+                    print("\nFinal score: " + str(move.score))
                     break
                 move.score = sumTiles(grid)
                 if(move.score == 8):
@@ -134,10 +134,14 @@ def startGame():
                 if(move.score>8):
                     print("\nCurrent score: " + str(move.score))
                     back_count = random.randint(1, 3)
-                    print("\nScore is greater than 8. Backtracking ... %d moves", min(len(gridStack)-1, back_count))
+                    print("\nScore is greater than 8. Backtracking ... {} moves".format(min(len(gridStack)-1, back_count)))
                     grid, gridStack = backtrack(gridStack, back_count)
                     printGrid(grid)
                     move.score = sumTiles(grid)
+                    if(move.score == 8):
+                        print("\nFinal score: " + str(move.score))
+                        print("\nCongratulations!! You Won")
+                        break
                 print("\nCurrent score: " + str(move.score))
         else:
             print("\nInvalid direction, please provide valid movement direction (L, B, R, T).")
