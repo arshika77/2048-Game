@@ -45,14 +45,23 @@ def findEmptySlot(grid):
     return (-1, -1, 1)
 
 # Adds a random number to the grid
-def addNumber(grid):
+def addNumber(grid, add_type = 'normal'):
     num = random.randint(1, 2) * 2
-    x = random.randint(0, 3)
-    y = random.randint(0, 3)
-    lost = 0
-    if grid[x][y] != '.':
-        x, y, lost = findEmptySlot(grid)
-    if not lost: grid[x][y] = str(num)
+    if add_type == 'start':
+        for i in range(2):
+            x = random.randint(0, 3)
+            y = random.randint(0, 3)
+            lost = 0
+            if grid[x][y] != '.':
+                x, y, lost = findEmptySlot(grid)
+            if not lost: grid[x][y] = str(num)
+    else: 
+        x = random.randint(0, 3)
+        y = random.randint(0, 3)
+        lost = 0
+        if grid[x][y] != '.':
+            x, y, lost = findEmptySlot(grid)
+        if not lost: grid[x][y] = str(num)
     return (grid, lost)
 
 # Prints the current game state
@@ -85,8 +94,8 @@ def startGame():
             ['.', '.', '.', '.'],
             ['.', '.', '.', '.'],
             ['.', '.', '.', '.']]
-    for i in range(2):
-        grid, _ = addNumber(grid) #intialize two tiles
+    
+        grid, _ = addNumber(grid, 'start') #intialize two tiles
     
     gridStack = []
     gridStack.append(grid)
