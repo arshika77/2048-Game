@@ -24,7 +24,12 @@ def main():
 
     f.printGrid(grid) #Print the inital grid
     loseStatus = 0 #For the curent grid that we have submitted, this variable is not relevant. However, it will be for grids of size 2x2 and 3x3, as it is possible that the agent loses before reaching 8
-    f.move.score = 0 # Score of the user
+    #f.move.score = 0 # Score of the user
+    f.move.score = f.sumTiles(grid)
+    if(f.move.score == 8):
+        print("\nFinal score: " + str(f.move.score))
+        print("\nCongratulations!! You Won")
+        return 0
 
     #---------Make the game runnable by calling relevant functions from the func module and performing relevant operations on them------------------
 
