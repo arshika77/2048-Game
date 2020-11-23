@@ -78,8 +78,9 @@ def printGrid(grid):
 
 def backtrack(gridStack, back_count):
     
-    for i in range(min(len(gridStack), back_count)):
+    for i in range(min(len(gridStack), back_count+1)):
         grid = gridStack.pop()
+    gridStack.append(grid)
     return grid, gridStack
 
 # Starts the game
@@ -95,7 +96,7 @@ def startGame():
             ['.', '.', '.', '.'],
             ['.', '.', '.', '.']]
     
-        grid, _ = addNumber(grid, 'start') #intialize two tiles
+    grid, _ = addNumber(grid, 'start') #intialize two tiles
     
     gridStack = []
     gridStack.append(grid)
@@ -128,7 +129,7 @@ def startGame():
                 if(move.score>8):
                     print("\nCurrent score: " + str(move.score))
                     back_count = random.randint(1, 3)
-                    print("\nScore is greater than 8. Backtracking ... %d moves", min(len(gridStack), back_count))
+                    print("\nScore is greater than 8. Backtracking ... %d moves", min(len(gridStack)-1, back_count))
                     grid, gridStack = backtrack(gridStack, back_count)
                     printGrid(grid)
                     move.score = sumTiles(grid)
