@@ -25,6 +25,7 @@ class Lexer():
         self.lexer.add('value', r'VALUE')
         self.lexer.add('in', r'IN')
         # Number
+        self.lexer.add('number', r'\d+')
         self.lexer.add('dot', r'.')
         self.lexer.add('comma', r',')
         # Ignore spaces
