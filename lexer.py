@@ -25,7 +25,7 @@ class Lexer():
         self.lexer.add('VALUE', r'\bVALUE\b')
         self.lexer.add('IN', r'\bIN\b')
         #Identifier
-        self.lexer.add('IDENTIFIER', r"[a-zA-Z][a-zA-Z0-9]*")
+        self.lexer.add('IDENTIFIER', r"[a-zA-Z_][a-zA-Z0-9_]*$")
         # Number
         self.lexer.add('NUMBER', r'\d+')
         self.lexer.add('COMMA', r',')
