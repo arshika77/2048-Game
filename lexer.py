@@ -28,10 +28,10 @@ class Lexer():
         self.lexer.add('IDENTIFIER', r"[a-zA-Z_][a-zA-Z0-9_]*")
         # Number
         self.lexer.add('NUMBER', r'\d+')
-        self.lexer.add('COMMA', r',')
+        self.lexer.add('COMMA', r'\,')
         self.lexer.add('DOT', r'\.')
         self.lexer.add('UNIDENTIFIED_TOKEN',r'.')
-        # Ignore spaces
+        # Ignore whitespaces
         self.lexer.ignore('\s+')
 
     def get_lexer(self):
