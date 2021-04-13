@@ -32,8 +32,6 @@ class Lexer():
         self.lexer.add('DOT', r'.')
         # Ignore spaces
         self.lexer.ignore('\s+')
-        # ignore whitespace 
-        self.lexer.ignore('[ \t\r\f\v]+')
 
     def get_lexer(self):
         self._add_tokens()
