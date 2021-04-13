@@ -7,25 +7,25 @@ class Lexer():
 
     def _add_tokens(self):
         # Print
-        self.lexer.add('ADD', r'ADD ')
-        self.lexer.add('SUB', r'SUBTRACT ')
-        self.lexer.add('MUL', r'MULTIPLY ')
-        self.lexer.add('DIV', r'DIVIDE ')
+        self.lexer.add('ADD', r'\bADD\b')
+        self.lexer.add('SUB', r'\bSUBTRACT\b')
+        self.lexer.add('MUL', r'\bMULTIPLY\b')
+        self.lexer.add('DIV', r'\bDIVIDE\b')
         # Parenthesis
-        self.lexer.add('LEFT', r'LEFT ')
-        self.lexer.add('RIGHT', r'RIGHT ')
-        self.lexer.add('UP', r'UP ')
-        self.lexer.add('DOWN', r'DOWN ')
+        self.lexer.add('LEFT', r'\bLEFT\b')
+        self.lexer.add('RIGHT', r'\bRIGHT\b')
+        self.lexer.add('UP', r'\bUP\b')
+        self.lexer.add('DOWN', r'\bDOWN\b')
         # Semi Colon
-        self.lexer.add('ASSIGN', r'ASSIGN ')
-        self.lexer.add('TO', r'TO ')
-        self.lexer.add('VAR', r'VAR ')
-        self.lexer.add('IS', r'IS ')
+        self.lexer.add('ASSIGN', r'\bASSIGN\b')
+        self.lexer.add('TO', r'\bTO\b')
+        self.lexer.add('VAR', r'\bVAR\b')
+        self.lexer.add('IS', r'\bIS\b')
         # Operators
-        self.lexer.add('VALUE', r'VALUE ')
-        self.lexer.add('IN', r'IN ')
+        self.lexer.add('VALUE', r'\bVALUE\b')
+        self.lexer.add('IN', r'\bIN\b')
         #Identifier
-        self.lexer.add('IDENTIFIER', r"[a-zA-Z_][a-zA-Z0-9_]*")
+        self.lexer.add('IDENTIFIER', r"[a-zA-Z][a-zA-Z0-9]")
         # Number
         self.lexer.add('NUMBER', r'\d+')
         self.lexer.add('COMMA', r',')
