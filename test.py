@@ -2,7 +2,7 @@ from lexer import Lexer
 from parsetrans import Parser
 
 text_input = """
-ADD LEFT . ADDITION 5,7  8 amity     19var20haan.
+ADD LEFT __init__  #.
 """
 
 lexer = Lexer().get_lexer()

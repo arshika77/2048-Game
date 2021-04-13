@@ -1,17 +1,17 @@
+from rply import ParserGenerator
+from ast import Number, Sum, Sub, Mul, Div
+
 class Parser():
     def __init__(self):
         self.pg = ParserGenerator(
             # A list of all token names accepted by the parser.
-            ['add', 'subtract', 'multiply', 'divide', 'left', 'right', 'up', 'down', 'assign', 'to', 'var', 'is', 'value', 'in', 'number', 'dot', 'comma'])
+            ['ADD','SUB','MUL','DIV','LEFT','RIGHT','UP','DOWN','ASSIGN',
+            'TO','VAR','IS','VALUE','IN','IDENTIFIER','NUMBER','COMMA','DOT'])
 
     def parse(self):
-        @self.pg.production('program : PRINT OPEN_PAREN expression CLOSE_PAREN SEMI_COLON')
-        @self.pg.production('expression : expression SUM expression')
-        @self.pg.production('expression : expression SUB expression')
-        @self.pg.production('expression : NUMBER')
         
-        def program(p):
-            return Print(p[2])
+        @self.pg.production()
+        
 
         
         def expression(p):
