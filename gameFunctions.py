@@ -63,15 +63,17 @@ class Grid2048():
         
         return self.grid
 
-    # Finds current sum of all the tiles on the grid
-    def sumTiles(self):
-        sumTile = 0
-        for j in range(self.dim):
-            for i in range(self.dim):
-                if self.grid[j][i] != '0':
-                    sumTile += int(self.grid[j][i])
+    # Checks the coordinates of the tile
+    def checkCord(self,x):
+        return x>=0 and x<self.dim
 
-        return sumTile
+    # Checks if tile name already exists
+    def checkName(self,tile_name):
+        for i in range(self.dim):
+            for j in range(self.dim):
+                if tile_name in self.var[i][j]:
+                    return False
+        return True
 
     # Finds empty slot in the game grid
     def findEmptySlot(self):
@@ -105,21 +107,30 @@ class Grid2048():
             tile_val = info[0]
             x_cord = int(info[1])
             y_cord = int(info[2])
+            if not self.checkCord(x_cord) or not self.checkCord(y_cord):
+                raise ValueError("Coordinates out of range. Coordinates must be in the range (0,%s) " %self.dim)            
             self.grid[x_cord][y_cord] = str(tile_val)
         elif add_type == 1:
             x_cord, y_cord = self.findVarSlot(info[1])
-            print(x_cord,y_cord)
+            if not self.checkCord(x_cord) or not self.checkCord(y_cord):
+                raise ValueError("Coordinates out of range. Coordinates must be in the range (0,%s) " %self.dim)
             self.grid[x_cord][y_cord] = str(info[0])
         elif add_type == 2: 
             x_cord_from = int(info[0])
             y_cord_from = int(info[1])
             x_cord_to = int(info[2])
             y_cord_to = int(info[3])
+            if not self.checkCord(x_cord_to) or not self.checkCord(y_cord_to)or not self.checkCord(x_cord_from) or not self.checkCord(y_cord_from):
+                raise ValueError("Coordinates out of range. Coordinates must be in the range (0,%s) " %self.dim)
             self.grid[x_cord_to][y_cord_to] = self.grid[x_cord_from][y_cord_from]
             
     def assignVarName(self, tile_name, x_cord, y_cord):
         x = int(x_cord)
         y = int(y_cord)
+        if not self.checkCord(x) or not self.checkCord(y):
+            raise ValueError("Coordinates out of range. Coordinates must be in the range (0,%s) " %self.dim)
+        if not self.checkName(tile_name):
+            raise ValueError("Cannot name tile. Tile name \"%s\" already exists " %tile_name)
         self.var[x][y].append(tile_name)
         print('2048> Variable {} is currently assigned to coordinates ({},{})'.format(tile_name,x_cord,y_cord))
     
@@ -127,6 +138,8 @@ class Grid2048():
         if signal == 20:
             x_cord = int(info[0])
             y_cord = int(info[1])
+            if not self.checkCord(x_cord) or not self.checkCord(y_cord):
+                raise ValueError("Coordinates out of range. Coordinates must be in the range (0,%s) " %self.dim)
         else:
             x_cord, y_cord = self.findVarSlot(info[0])
         return self.grid[x_cord][y_cord]
