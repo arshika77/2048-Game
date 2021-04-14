@@ -14,7 +14,7 @@ class Grid2048():
 
     # Implements game logic 
     # Generalized for all four directions using rotation logic
-    def move(self, dir):
+    def move(self, dir, move_type):
 
         for i in range(dir): self.grid = self.rotate()
 
@@ -30,7 +30,15 @@ class Grid2048():
 
             for j in range(len(temp) - 1):
                 if temp[j] == temp[j + 1] and temp[j] != '0' and temp[j + 1] != '0':
-                    temp[j] = str(2 * int(temp[j]))
+                    if move_type == 0:
+                        temp[j] = str(2 * int(temp[j]))
+                    elif move_type == 1:
+                        temp[j] = str(0)
+                    elif move_type == 2:
+                        temp[j] = str(int(temp[j])**2)
+                    elif move_type == 3:
+                        temp[j] = str(1)
+                    
                     temp[j + 1] = '0'
 
             self.grid[i] = []
@@ -84,7 +92,16 @@ class Grid2048():
         if self.lost == 1:
             print("Haha Dummy! My grandma plays this game better than you")
         signal = arg_list[0]
-        
+        if signal in range(16):
+            move_type = (signal-(signal%4))/4
+            self.move(signal%4, move_type)
+        elif signal in range(16, 19):
+            #assign commands
+        elif signal is 19:
+            #variable assignment
+        elif signal in range(20, 22):
+            #query commands
+                       
     # Prints the current game state
     def printGrid(self):
         print("\n")
