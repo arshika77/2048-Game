@@ -1,12 +1,15 @@
 from rply import ParserGenerator
 from ast import MoveSignal, AssignSignal, AssignQuerySignal, VarSignal, QueryValSignal, QueryIDSignal
 
+token_list = ['ADD','SUB','MUL','DIV','LEFT','RIGHT','UP','DOWN','ASSIGN',
+            'TO','VAR','IS','VALUE','IN','IDENTIFIER','NUMBER','COMMA','DOT']
+
 class Parser():
     def __init__(self):
         self.pg = ParserGenerator(
             # A list of all token names accepted by the parser.
-            ['ADD','SUB','MUL','DIV','LEFT','RIGHT','UP','DOWN','ASSIGN',
-            'TO','VAR','IS','VALUE','IN','IDENTIFIER','NUMBER','COMMA','DOT'])
+            token_list
+            )
 
     def parse(self):
         
@@ -51,6 +54,8 @@ class Parser():
             tile_name = p[1]
             x_cord = p[3]
             y_cord = p[5]
+            if tile_name.value in token_list:
+                raise ValueError("Operation not done. Keyword %s cannot be assigned as a variable name" % tile_name.value) 
             return VarSignal(tile_name.value,x_cord.value,y_cord.value)
 
         @self.pg.production('program : VALUE IN NUMBER COMMA NUMBER DOT')
@@ -64,9 +69,36 @@ class Parser():
             expressionVal = p[2]
             return QueryIDSignal(expressionVal)
 
+        @self.pg.production('program : VAR ADD IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR SUB IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR MUL IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR DIV IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR LEFT IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR RIGHT IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR UP IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR DOWN IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR ASSIGN IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR TO IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR VAR IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR IS IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR VALUE IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR IN IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR IDENTIFIER IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR NUMBER IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR COMMA IS NUMBER COMMA NUMBER DOT')
+        @self.pg.production('program : VAR DOT IS NUMBER COMMA NUMBER DOT')
+        def error_varName(p):
+            raise ValueError("The keyword \'%s\' cannot be used as a variable name " %p[1].value)
+
         @self.pg.error
         def error_handle(token):
-            raise ValueError(token)
+            if token.gettokentype() == "$end":
+                raise ValueError("The command must end with a \".\"")
+            if token.value not in token_list and token.value.upper() in token_list:
+                raise ValueError("\"%s\" must be in uppercase" % token.value)
+            if token.gettokentype() == "UNIDENTIFIED_TOKEN":
+                raise ValueError("SYNTAX ERROR: Please check your syntax around %s" %token.value )
+            raise ValueError("Ran into an unexpected %s. Please check your syntax" %token.gettokentype())
 
     def get_parser(self):
         return self.pg.build()

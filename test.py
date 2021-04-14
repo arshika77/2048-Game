@@ -2,7 +2,7 @@ from lexer import Lexer
 from parsetrans import Parser
 
 text_input = """
-    ASSIGN VALUE IN 2,3 TO 4,5.
+    VAR IN 69,7.
 """
 
 lexer = Lexer().get_lexer()
