@@ -1,5 +1,5 @@
 from rply import ParserGenerator
-from ast import MoveSignal, AssignSignal, VarSignal, QueryValSignal, QueryIDSignal
+from ast import MoveSignal, AssignSignal, AssignQuerySignal, VarSignal, QueryValSignal, QueryIDSignal
 
 class Parser():
     def __init__(self):
@@ -37,6 +37,14 @@ class Parser():
             x_cord = p[3]
             y_cord = p[5]
             return AssignSignal(tile_num.value,x_cord.value,y_cord.value)
+
+        @self.pg.production('program : ASSIGN VALUE IN NUMBER COMMA NUMBER TO NUMBER COMMA NUMBER DOT')
+        def assign(p):
+            x_cord_init = p[3]
+            y_cord_init = p[5]
+            x_cord = p[7]
+            y_cord = p[9]
+            return AssignQuerySignal(x_cord_init.value,y_cord_init.value,x_cord.value,y_cord.value)
 
         @self.pg.production('program : VAR IDENTIFIER IS NUMBER COMMA NUMBER DOT')
         def varName(p):
