@@ -42,7 +42,7 @@ class Parser():
             return AssignSignal(tile_num.value,x_cord.value,y_cord.value)
 
         @self.pg.production('program : ASSIGN VALUE IN NUMBER COMMA NUMBER TO NUMBER COMMA NUMBER DOT')
-        def assign(p):
+        def assignQuery(p):
             x_cord_init = p[3]
             y_cord_init = p[5]
             x_cord = p[7]
@@ -88,7 +88,7 @@ class Parser():
         @self.pg.production('program : VAR COMMA IS NUMBER COMMA NUMBER DOT')
         @self.pg.production('program : VAR DOT IS NUMBER COMMA NUMBER DOT')
         def error_varName(p):
-            raise ValueError("The keyword \'%s\' cannot be used as a variable name " %p[1].value)
+            raise  ValueError("The keyword \'%s\' cannot be used as a variable name " %p[1].value)
 
         @self.pg.error
         def error_handle(token):

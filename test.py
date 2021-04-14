@@ -1,14 +1,23 @@
 from lexer import Lexer
 from parsetrans import Parser
 
-text_input = """
-    VAR IN 69,7.
-"""
 
-lexer = Lexer().get_lexer()
-tokens = lexer.lex(text_input)
+print("2048> Welcome to the 2048-game engine @DevelopedBy Arshika ")
+print("2048> Please type a command")
 
-pg = Parser()
-pg.parse()
-parser = pg.get_parser()
-print(parser.parse(tokens).eval())
+while(1):
+    text_input = input("--->")
+    lexer = Lexer().get_lexer()
+    tokens = lexer.lex(text_input)
+
+    try:
+        pg = Parser()
+        pg.parse()
+        parser = pg.get_parser()
+        parsed_output = parser.parse(tokens).eval()
+        print("2048> Output parsed")
+        print("2048> ",parsed_output)
+    except ValueError as e:
+        print("2048> Error: ",e)
+
+        
