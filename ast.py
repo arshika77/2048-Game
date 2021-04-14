@@ -50,6 +50,14 @@ class AssignSignal():
     def eval(self):
         return [16,self.tile_num,self.x_cord,self.y_cord]
 
+class AssignNameSignal():
+    def __init__(self,tile_num,tile_name):
+        self.tile_num = tile_num
+        self.tile_name = tile_name
+
+    def eval(self):
+        return [17,self.tile_num,self.tile_name]
+
 class AssignQuerySignal():
     def __init__(self,x_cord_init,y_cord_init,x_cord,y_cord):
         self.x_cord_init = x_cord_init
@@ -58,7 +66,7 @@ class AssignQuerySignal():
         self.y_cord = y_cord
 
     def eval(self):
-        return [17,self.x_cord_init,self.y_cord_init,self.x_cord,self.y_cord]
+        return [18,self.x_cord_init,self.y_cord_init,self.x_cord,self.y_cord]
 
 class VarSignal():
     def __init__(self,tile_name,x_cord,y_cord):
@@ -67,7 +75,7 @@ class VarSignal():
         self.y_cord = y_cord
 
     def eval(self):
-        return [18,self.tile_name,self.x_cord,self.y_cord]
+        return [19,self.tile_name,self.x_cord,self.y_cord]
 
 class QueryValSignal():
     def __init__(self,x_cord,y_cord):
@@ -75,11 +83,11 @@ class QueryValSignal():
         self.y_cord = y_cord
 
     def eval(self):
-        return [19,self.x_cord,self.y_cord]
+        return [20,self.x_cord,self.y_cord]
 
 class QueryIDSignal():
     def __init__(self,expressionVal):
         self.expressionVal = expressionVal
 
     def eval(self):
-        return [20,self.expressionVal.value]
+        return [21,self.expressionVal.value]

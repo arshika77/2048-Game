@@ -1,5 +1,5 @@
 from rply import ParserGenerator
-from ast import MoveSignal, AssignSignal, AssignQuerySignal, VarSignal, QueryValSignal, QueryIDSignal
+from ast import MoveSignal, AssignSignal, AssignNameSignal, AssignQuerySignal, VarSignal, QueryValSignal, QueryIDSignal
 
 token_list = ['ADD','SUB','MUL','DIV','LEFT','RIGHT','UP','DOWN','ASSIGN',
             'TO','VAR','IS','VALUE','IN','IDENTIFIER','NUMBER','COMMA','DOT']
@@ -40,6 +40,12 @@ class Parser():
             x_cord = p[3]
             y_cord = p[5]
             return AssignSignal(tile_num.value,x_cord.value,y_cord.value)
+
+        @self.pg.production('program : ASSIGN NUMBER TO IDENTIFIER DOT')
+        def assignName(p):
+            tile_num = p[1]
+            tile_name = p[3]
+            return AssignNameSignal(tile_num.value,tile_name.value)
 
         @self.pg.production('program : ASSIGN VALUE IN NUMBER COMMA NUMBER TO NUMBER COMMA NUMBER DOT')
         def assignQuery(p):
@@ -83,12 +89,11 @@ class Parser():
         @self.pg.production('program : VAR IS IS NUMBER COMMA NUMBER DOT')
         @self.pg.production('program : VAR VALUE IS NUMBER COMMA NUMBER DOT')
         @self.pg.production('program : VAR IN IS NUMBER COMMA NUMBER DOT')
-        @self.pg.production('program : VAR IDENTIFIER IS NUMBER COMMA NUMBER DOT')
         @self.pg.production('program : VAR NUMBER IS NUMBER COMMA NUMBER DOT')
         @self.pg.production('program : VAR COMMA IS NUMBER COMMA NUMBER DOT')
         @self.pg.production('program : VAR DOT IS NUMBER COMMA NUMBER DOT')
         def error_varName(p):
-            raise  ValueError("The keyword \'%s\' cannot be used as a variable name " %p[1].value)
+            raise ValueError("The keyword \'%s\' cannot be used as a variable name " %p[1].value)
 
         @self.pg.error
         def error_handle(token):

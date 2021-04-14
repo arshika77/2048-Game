@@ -10,10 +10,7 @@ def main():
 
     # This is the basic structure for the 2048 grid. The developer can modify the grid here and the game will run without hiccups
 
-    grid = [['.', '.', '.', '.'],
-            ['.', '.', '.', '.'],
-            ['.', '.', '.', '.'],
-            ['.', '.', '.', '.']]
+    grid = [['.', '.', '.', '.'], ['.', '.', '.', '.'],['.', '.', '.', '.'],['.', '.', '.', '.']]
 
     grid, _ = f.addNumber(grid, 'start') #intialize two tiles to 2 or 4
 
