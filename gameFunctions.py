@@ -70,11 +70,18 @@ class Grid2048():
                 if self.grid[i][j] == '0':
                     return (i, j, 0)
         return (-1, -1, 1)
+    
+    def findVarSlot(self, tile_name):
+        for i in range(self.dim):
+            for j in range(self.dim):
+                if self.var[i][j] == tile_name:
+                    return (i, j)
+        return ("Var Not in Grid")
 
     # Randomly initializes the start grid
 
     # Adds a random number to the grid
-    def addNumber(self,add_type,x_cord=None,y_cord=None):
+    def addNumber(self, add_type='normal', info=None):
         num = random.randint(1, 2) * 2
         if add_type == 'normal':
             x = random.randint(0, self.dim-1)
@@ -82,25 +89,54 @@ class Grid2048():
             print(x,y)
             if self.grid[x][y] != '0':
                 x, y, self.lost = self.findEmptySlot()
-            if not self.lost: self.grid[x][y] = str(num)
-        elif add_type == 'assign': 
-            if self.grid[x_cord][y_cord] != '0':
-                x_cord, y_cord, self.lost = self.findEmptySlot()
-            if not self.lost: self.grid[x_cord][y_cord] = str(num)
+            if not self.lost: 
+                self.grid[x][y] = str(num)
+        elif add_type == 0:
+            tile_val = info[0]
+            x_cord = info[1]
+            y_cord = info[2]
+            self.grid[x_cord][y_cord] = str(tile_val)
+        elif add_type == 1:
+            x_cord, y_cord = self.findVarSlot(info[1])
+            self.grid[x_cord][y_cord] = str(info[0])
+        elif add_type == 2: 
+            x_cord_from = info[0]
+            y_cord_from = info[1]
+            x_cord_to = info[2]
+            y_cord_to = info[3]
+            self.grid[x_cord_to][y_cord_to] = self.grid[x_cord_from][y_cord_from]
+            
+    def assignVarName(self, tile_name, x_cord, y_cord):
+        self.var[x_cord][y_cord] = tile_name
+    
+    def query(self, signal, info):
+        if signal == 20:
+            x_cord = info[0]
+            y_cord = info[1]
+        else:
+            x_cord, y_cord = self.findVarSlot(info[0])
+        return self.grid[x_cord][y_cord]
 
     def play(self,arg_list):
-        if self.lost == 1:
-            print("Haha Dummy! My grandma plays this game better than you")
+        
         signal = arg_list[0]
         if signal in range(16):
             move_type = (signal-(signal%4))/4
             self.move(signal%4, move_type)
+            self.addNumber()
         elif signal in range(16, 19):
-            #assign commands
+            info = arg_list[1:]
+            self.addNumber(signal%16, info=info)
         elif signal is 19:
-            #variable assignment
+            info = arg_list[1:]
+            self.assignVarName(info[0], info[1], info[2])
         elif signal in range(20, 22):
-            #query commands
+            info = arg_list[1:]
+            val = self.query(signal, info)
+            print('Value stored in {} is {}'.format(info, val))
+        
+        if self.lost == 1:
+            print("Haha Dummy! My grandma plays this game better than you")
                        
     # Prints the current game state
     def printGrid(self):
