@@ -7,38 +7,38 @@ class MoveSignal():
         if self.action == "ADD":
             if self.operator == "LEFT":
                 return [0]
-            elif self.operator == "RIGHT":
-                return [1]
-            elif self.operator == "UP":
-                return [2]
             elif self.operator == "DOWN":
+                return [1]
+            elif self.operator == "RIGHT":
+                return [2]
+            elif self.operator == "UP":
                 return [3]
         elif self.action == "SUB":
             if self.operator == "LEFT":
                 return [4]
-            elif self.operator == "RIGHT":
-                return [5]
-            elif self.operator == "UP":
-                return [6]
             elif self.operator == "DOWN":
+                return [5]
+            elif self.operator == "RIGHT":
+                return [6]
+            elif self.operator == "UP":
                 return [7]
         elif self.action == "MUL":
             if self.operator == "LEFT":
                 return [8]
-            elif self.operator == "RIGHT":
-                return [9]
-            elif self.operator == "UP":
-                return [10]
             elif self.operator == "DOWN":
+                return [9]
+            elif self.operator == "RIGHT":
+                return [10]
+            elif self.operator == "UP":
                 return [11]
         elif self.action == "DIV":
             if self.operator == "LEFT":
                 return [12]
-            elif self.operator == "RIGHT":
-                return [13]
-            elif self.operator == "UP":
-                return [14]
             elif self.operator == "DOWN":
+                return [13]
+            elif self.operator == "RIGHT":
+                return [14]
+            elif self.operator == "UP":
                 return [15]
 
 class AssignSignal():
