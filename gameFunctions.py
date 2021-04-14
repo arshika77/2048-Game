@@ -1,11 +1,17 @@
 import random
 import numpy as np
+from copy import deepcopy
 
 class Grid2048():
     def __init__(self,dim):
         self.dim = dim
         self.grid = [['0']*self.dim for i in range(self.dim)]
-        self.var = [[]*self.dim for i in range(self.dim)]
+        self.var = []
+        l = []
+        for i in range(self.dim):
+            l.append([])
+        for i in range(self.dim):
+            self.var.append(deepcopy(l))
         self.lost = 0
 
     # Rotates a 2D list clockwise
@@ -38,7 +44,11 @@ class Grid2048():
                         temp[j] = str(int(temp[j])**2)
                     elif move_type == 3:
                         temp[j] = str(1)
-                    
+
+                    self.var[i][j].extend(deepcopy(self.var[i][j+1]))
+                    if temp[j] == str(0):
+                        self.var[i][j] = deepcopy([])
+                    self.var[i][j+1] = deepcopy([])
                     temp[j + 1] = '0'
 
             self.grid[i] = []
@@ -74,7 +84,7 @@ class Grid2048():
     def findVarSlot(self, tile_name):
         for i in range(self.dim):
             for j in range(self.dim):
-                if self.var[i][j] == tile_name:
+                if tile_name in self.var[i][j]:
                     return (i, j)
         return ("Var Not in Grid")
 
@@ -93,26 +103,30 @@ class Grid2048():
                 self.grid[x][y] = str(num)
         elif add_type == 0:
             tile_val = info[0]
-            x_cord = info[1]
-            y_cord = info[2]
+            x_cord = int(info[1])
+            y_cord = int(info[2])
             self.grid[x_cord][y_cord] = str(tile_val)
         elif add_type == 1:
             x_cord, y_cord = self.findVarSlot(info[1])
+            print(x_cord,y_cord)
             self.grid[x_cord][y_cord] = str(info[0])
         elif add_type == 2: 
-            x_cord_from = info[0]
-            y_cord_from = info[1]
-            x_cord_to = info[2]
-            y_cord_to = info[3]
+            x_cord_from = int(info[0])
+            y_cord_from = int(info[1])
+            x_cord_to = int(info[2])
+            y_cord_to = int(info[3])
             self.grid[x_cord_to][y_cord_to] = self.grid[x_cord_from][y_cord_from]
             
     def assignVarName(self, tile_name, x_cord, y_cord):
-        self.var[x_cord][y_cord] = tile_name
+        x = int(x_cord)
+        y = int(y_cord)
+        self.var[x][y].append(tile_name)
+        print('2048> Variable {} is currently assigned to coordinates ({},{})'.format(tile_name,x_cord,y_cord))
     
     def query(self, signal, info):
         if signal == 20:
-            x_cord = info[0]
-            y_cord = info[1]
+            x_cord = int(info[0])
+            y_cord = int(info[1])
         else:
             x_cord, y_cord = self.findVarSlot(info[0])
         return self.grid[x_cord][y_cord]
@@ -133,7 +147,14 @@ class Grid2048():
         elif signal in range(20, 22):
             info = arg_list[1:]
             val = self.query(signal, info)
-            print('Value stored in {} is {}'.format(info, val))
+            if len(info) == 1:
+                print('Value stored in {} is {}'.format(info[0], val))
+            else:
+                print('Value stored in {} is {}'.format(info, val))
+#            for i in range(self.dim):
+#                for j in range(self.dim):
+#                    if info[0] in self.var[i][j]:
+#                        print(i,j)
         
         if self.lost == 1:
             print("Haha Dummy! My grandma plays this game better than you")

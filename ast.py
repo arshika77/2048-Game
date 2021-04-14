@@ -13,7 +13,7 @@ class MoveSignal():
                 return [2]
             elif self.operator == "UP":
                 return [3]
-        elif self.action == "SUB":
+        elif self.action == "SUBTRACT":
             if self.operator == "LEFT":
                 return [4]
             elif self.operator == "DOWN":
@@ -22,7 +22,7 @@ class MoveSignal():
                 return [6]
             elif self.operator == "UP":
                 return [7]
-        elif self.action == "MUL":
+        elif self.action == "MULTIPLY":
             if self.operator == "LEFT":
                 return [8]
             elif self.operator == "DOWN":
@@ -31,7 +31,7 @@ class MoveSignal():
                 return [10]
             elif self.operator == "UP":
                 return [11]
-        elif self.action == "DIV":
+        elif self.action == "DIVIDE":
             if self.operator == "LEFT":
                 return [12]
             elif self.operator == "DOWN":
