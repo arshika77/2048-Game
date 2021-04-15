@@ -52,6 +52,8 @@ class Grid2048():
                     if move_type == 0:
                         temp[j] = str(int(temp[j]) + int(temp[j+1]))
                     temp[j + 1] = '0'
+                    temp_var[j].extend(deepcopy(temp_var[j+1]))
+                    temp_var[j+1] = deepcopy([])
                 if temp[j] == temp[j + 1] and temp[j] != '0' and temp[j + 1] != '0':
                     if move_type == 1:
                         temp[j] = str(0)
