@@ -133,7 +133,7 @@ class Grid2048():
             y_cord = int(info[2])
             if not self.checkCord(x_cord) or not self.checkCord(y_cord):
                 raise ValueError("Coordinates out of range. Coordinates must be in the range (0,%s) " %self.dim) 
-            if tile_val == 0:
+            if tile_val == '0':
                 self.var[x_cord][y_cord] = deepcopy([])
             self.grid[x_cord][y_cord] = str(tile_val)
         elif add_type == 1:
@@ -141,7 +141,7 @@ class Grid2048():
             x_cord, y_cord = self.findVarSlot(info[1])
             if not self.checkCord(x_cord) or not self.checkCord(y_cord):
                 raise ValueError("Coordinates out of range. Coordinates must be in the range (0,%s) " %self.dim)
-            if tile_val == 0:
+            if tile_val == '0':
                 self.var[x_cord][y_cord] = deepcopy([])
             self.grid[x_cord][y_cord] = str(tile_val)
         elif add_type == 2: 
@@ -152,7 +152,7 @@ class Grid2048():
             tile_val = self.grid[x_cord_from][y_cord_from]
             if not self.checkCord(x_cord_to) or not self.checkCord(y_cord_to)or not self.checkCord(x_cord_from) or not self.checkCord(y_cord_from):
                 raise ValueError("Coordinates out of range. Coordinates must be in the range (0,%s) " %self.dim)
-            if tile_val == 0:
+            if tile_val == '0':
                 self.var[x_cord_to][y_cord_to] = deepcopy([])
             self.grid[x_cord_to][y_cord_to] = str(tile_val)
             

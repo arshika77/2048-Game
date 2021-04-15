@@ -33,23 +33,26 @@ print("2048> Welcome to the 2048-game engine @DevelopedBy Arshika ")
 print("2048> The initial state of the game is: ")
 game.printGrid()
 print("2048> Please type a command")
+try:
+    while True:
+        text_input = input("--->")
+        lexer = Lexer().get_lexer()
+        tokens = lexer.lex(text_input)
 
-while True:
-    text_input = input("--->")
-    lexer = Lexer().get_lexer()
-    tokens = lexer.lex(text_input)
-
-    try:
-        pg = Parser()
-        pg.parse()
-        parser = pg.get_parser()
-        parsed_output = parser.parse(tokens).eval()
-        game.play(parsed_output)
-        print("2048> Command executed. New state of the grid is: ")
-        game.printGrid()
-        print_to_stderr(0)
-    except ValueError as e:
-        print("2048> Error: ",e)
-        print_to_stderr(1)
+        try:
+            pg = Parser()
+            pg.parse()
+            parser = pg.get_parser()
+            parsed_output = parser.parse(tokens).eval()
+            game.play(parsed_output)
+            print("2048> Command executed. New state of the grid is: ")
+            game.printGrid()
+            print_to_stderr(0)
+        except ValueError as e:
+            print("2048> Error: ",e)
+            print_to_stderr(1)
+except EOFError as f:
+    print("2048> ENCOUNTERED EOF. Exiting!")
+    exit()
 
         
