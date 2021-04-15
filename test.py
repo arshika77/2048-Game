@@ -8,7 +8,7 @@ def print_to_stderr(flagVal):
     if flagVal == 0:
         for i in game.grid:
             for j in i:
-                print(j, end = ' ',file = sys.stderr)
+                print(j, end = '\40',file = sys.stderr)
 
         for i in range(len(game.var[0])):
             for j in range(len(game.var[0])):
