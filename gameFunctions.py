@@ -187,7 +187,6 @@ class Grid2048():
             self.addNumber()
         elif signal in range(16, 19):
             info = arg_list[1:]
-            if 
             self.addNumber(signal%16, info=info)
         elif signal == 19:
             info = arg_list[1:]
