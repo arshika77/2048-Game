@@ -132,25 +132,35 @@ class Grid2048():
             x_cord = int(info[1])
             y_cord = int(info[2])
             if not self.checkCord(x_cord) or not self.checkCord(y_cord):
-                raise ValueError("Coordinates out of range. Coordinates must be in the range (0,%s) " %self.dim)            
+                raise ValueError("Coordinates out of range. Coordinates must be in the range (0,%s) " %self.dim) 
+            if tile_val == 0:
+                self.var[x_cord][y_cord] = deepcopy([])
             self.grid[x_cord][y_cord] = str(tile_val)
         elif add_type == 1:
+            tile_val = info[0]
             x_cord, y_cord = self.findVarSlot(info[1])
             if not self.checkCord(x_cord) or not self.checkCord(y_cord):
                 raise ValueError("Coordinates out of range. Coordinates must be in the range (0,%s) " %self.dim)
-            self.grid[x_cord][y_cord] = str(info[0])
+            if tile_val == 0:
+                self.var[x_cord][y_cord] = deepcopy([])
+            self.grid[x_cord][y_cord] = str(tile_val)
         elif add_type == 2: 
             x_cord_from = int(info[0])
             y_cord_from = int(info[1])
             x_cord_to = int(info[2])
             y_cord_to = int(info[3])
+            tile_val = self.grid[x_cord_from][y_cord_from]
             if not self.checkCord(x_cord_to) or not self.checkCord(y_cord_to)or not self.checkCord(x_cord_from) or not self.checkCord(y_cord_from):
                 raise ValueError("Coordinates out of range. Coordinates must be in the range (0,%s) " %self.dim)
-            self.grid[x_cord_to][y_cord_to] = self.grid[x_cord_from][y_cord_from]
+            if tile_val == 0:
+                self.var[x_cord_to][y_cord_to] = deepcopy([])
+            self.grid[x_cord_to][y_cord_to] = str(tile_val)
             
     def assignVarName(self, tile_name, x_cord, y_cord):
         x = int(x_cord)
         y = int(y_cord)
+        if self.grid[x][y] == str(0):
+            raise ValueError("Cannot assign tile name to empty tile")
         if not self.checkCord(x) or not self.checkCord(y):
             raise ValueError("Coordinates out of range. Coordinates must be in the range (0,%s) " %self.dim)
         if not self.checkName(tile_name):
@@ -177,6 +187,7 @@ class Grid2048():
             self.addNumber()
         elif signal in range(16, 19):
             info = arg_list[1:]
+            if 
             self.addNumber(signal%16, info=info)
         elif signal == 19:
             info = arg_list[1:]
