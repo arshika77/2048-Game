@@ -15,24 +15,34 @@ class Grid2048():
         self.lost = 0
 
     # Rotates a 2D list clockwise
-    def rotate(self):
-        return list(map(list, zip(*self.grid[::-1])))
+    def rotate(self, list_type):
+        if list_type == 'grid':
+            return list(map(list, zip(*self.grid[::-1])))
+        elif list_type == 'var':
+            return list(map(list, zip(*self.var[::-1])))
 
     # Implements game logic 
     # Generalized for all four directions using rotation logic
     def move(self, dir, move_type):
 
-        for i in range(dir): self.grid = self.rotate()
+        for i in range(dir): 
+            self.grid = self.rotate('grid')
+            self.var = self.rotate('var')
 
         for i in range(self.dim):
 
             temp = []
+            temp_var = []
 
             for j in self.grid[i]:
                 if j != '0':
                     temp.append(j)
+            for k in self.var[i]:
+                if k != []:
+                    temp_var.append(self.var[i][j])
 
-            temp += ['0'] * self.grid[i].count('0') 
+            temp += ['0'] * self.grid[i].count('0')
+            temp_var += [[]] * self.var[i].count([])
 
             for j in range(len(temp) - 1):
                 if temp[j] == temp[j + 1] and temp[j] != '0' and temp[j + 1] != '0':
@@ -45,23 +55,29 @@ class Grid2048():
                     elif move_type == 3:
                         temp[j] = str(1)
 
-                    self.var[i][j].extend(deepcopy(self.var[i][j+1]))
-                    if temp[j] == str(0):
-                        self.var[i][j] = deepcopy([])
-                    self.var[i][j+1] = deepcopy([])
                     temp[j + 1] = '0'
+                    temp_var[i][j].extend(deepcopy(temp_var[i][j+1]))
+                    # if temp[j] == str(0):
+                    #     self.var[i][j] = deepcopy([])
+                    temp_var[i][j+1] = deepcopy([])
+                    
 
             self.grid[i] = []
+            self.var[i] = []
 
             for j in temp:
                 if j != '0':
                     self.grid[i].append(j)
+            for k in temp_var:
+                if k != []:
+                    self.var[i].append(k)
 
             self.grid[i] += ['0'] * temp.count('0')
+            self.var[i] += [[]] * temp_var.count([])
 
-        for i in range(4 - dir): self.grid = self.rotate()
-        
-        return self.grid
+        for i in range(4 - dir): 
+            self.grid = self.rotate('grid')
+            self.var = self.rotate('var')
 
     # Checks the coordinates of the tile
     def checkCord(self,x):
