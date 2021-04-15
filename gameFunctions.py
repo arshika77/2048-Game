@@ -51,6 +51,7 @@ class Grid2048():
                 if temp[j] != '0' and temp[j + 1] != '0':
                     if move_type == 0:
                         temp[j] = str(int(temp[j]) + int(temp[j+1]))
+                    temp[j + 1] = '0'
                 if temp[j] == temp[j + 1] and temp[j] != '0' and temp[j + 1] != '0':
                     if move_type == 1:
                         temp[j] = str(0)
