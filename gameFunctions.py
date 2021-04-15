@@ -48,10 +48,11 @@ class Grid2048():
             temp_var += [deepcopy(l) for i in range(self.var[i].count([]))]
 
             for j in range(len(temp) - 1):
-                if temp[j] == temp[j + 1] and temp[j] != '0' and temp[j + 1] != '0':
+                if temp[j] != '0' and temp[j + 1] != '0':
                     if move_type == 0:
-                        temp[j] = str(2 * int(temp[j]))
-                    elif move_type == 1:
+                        temp[j] = str(int(temp[j]) + int(temp[j+1]))
+                if temp[j] == temp[j + 1] and temp[j] != '0' and temp[j + 1] != '0':
+                    if move_type == 1:
                         temp[j] = str(0)
                     elif move_type == 2:
                         temp[j] = str(int(temp[j])**2)
