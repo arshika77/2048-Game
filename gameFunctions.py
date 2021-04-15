@@ -39,10 +39,12 @@ class Grid2048():
                     temp.append(j)
             for k in self.var[i]:
                 if k != []:
-                    temp_var.append(self.var[i][j])
+                    temp_var.append(self.var[i][int(j)])
 
             temp += ['0'] * self.grid[i].count('0')
-            temp_var += [[]] * self.var[i].count([])
+            l = []
+            temp_var += [deepcopy(l) for i in range(self.var[i].count([]))]
+            #print(temp_var)
 
             for j in range(len(temp) - 1):
                 if temp[j] == temp[j + 1] and temp[j] != '0' and temp[j + 1] != '0':
