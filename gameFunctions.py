@@ -47,7 +47,6 @@ class Grid2048():
             temp += ['0'] * self.grid[i].count('0')
             l = []
             temp_var += [deepcopy(l) for i in range(self.var[i].count([]))]
-            print(temp_var)
 
             for j in range(len(temp) - 1):
                 if temp[j] == temp[j + 1] and temp[j] != '0' and temp[j + 1] != '0':
@@ -85,8 +84,6 @@ class Grid2048():
             self.grid = self.rotate('grid')
             self.var = self.rotate('var')
 
-        print(self.var)
-
     # Checks the coordinates of the tile
     def checkCord(self,x):
         return x>=0 and x<self.dim
@@ -108,10 +105,8 @@ class Grid2048():
         return (-1, -1, 1)
     
     def findVarSlot(self, tile_name):
-        print("TILE NAME: ",[tile_name])
         for i in range(self.dim):
             for j in range(self.dim):
-                print(self.var[i][j])
                 if [tile_name] in self.var[i][j]:
                     return (i, j)
         return ("Var Not in Grid")
@@ -124,7 +119,6 @@ class Grid2048():
         if add_type == 'normal':
             x = random.randint(0, self.dim-1)
             y = random.randint(0, self.dim-1)
-            #print(x,y)
             if self.grid[x][y] != '0':
                 x, y, self.lost = self.findEmptySlot()
             if not self.lost: 
@@ -167,9 +161,7 @@ class Grid2048():
             if not self.checkCord(x_cord) or not self.checkCord(y_cord):
                 raise ValueError("Coordinates out of range. Coordinates must be in the range (0,%s) " %self.dim)
         else:
-            print(info)
             x_cord, y_cord = self.findVarSlot(info[0])
-            print(x_cord,y_cord)
         return self.grid[x_cord][y_cord]
 
     def play(self,arg_list):
@@ -182,24 +174,18 @@ class Grid2048():
         elif signal in range(16, 19):
             info = arg_list[1:]
             self.addNumber(signal%16, info=info)
-        elif signal is 19:
+        elif signal == 19:
             info = arg_list[1:]
             self.assignVarName(info[0], info[1], info[2])
         elif signal in range(20, 22):
             info = arg_list[1:]
             val = self.query(signal, info)
-            if len(info) == 1:
-                print('Value stored in {} is {}'.format(info, val))
-            else:
-                print('Value stored in {} is {}'.format(info, val))
+            print('2048> Value stored in {} is {}'.format(info, val))
 #            for i in range(self.dim):
 #                for j in range(self.dim):
 #                    if info[0] in self.var[i][j]:
 #                        print(i,j)
-        
-        if self.lost == 1:
-            print("Haha Dummy! My grandma plays this game better than you")
-                       
+               
     # Prints the current game state
     def printGrid(self):
         print("\n")
