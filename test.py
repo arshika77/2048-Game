@@ -44,10 +44,8 @@ while True:
         pg.parse()
         parser = pg.get_parser()
         parsed_output = parser.parse(tokens).eval()
-        print("2048> Output parsed")
-        print("2048> ",parsed_output)
         game.play(parsed_output)
-        print("Command executed. New state of the grid is: ")
+        print("2048> Command executed. New state of the grid is: ")
         game.printGrid()
         print_to_stderr(0)
     except ValueError as e:
