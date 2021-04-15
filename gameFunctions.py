@@ -42,7 +42,7 @@ class Grid2048():
                     temp.append(j)
             for k in self.var[i]:
                 if k != []:
-                    temp_var.append([k])
+                    temp_var.append(k)
 
             temp += ['0'] * self.grid[i].count('0')
             l = []
@@ -78,7 +78,8 @@ class Grid2048():
                     self.var[i].append(k)
 
             self.grid[i] += ['0'] * temp.count('0')
-            self.var[i] += [[]] * temp_var.count([])
+            l = []
+            self.var[i] += [deepcopy(l) for i in range(temp_var.count([]))]
 
         for i in range(4 - dir): 
             self.grid = self.rotate('grid')
@@ -107,9 +108,11 @@ class Grid2048():
         return (-1, -1, 1)
     
     def findVarSlot(self, tile_name):
+        print("TILE NAME: ",[tile_name])
         for i in range(self.dim):
             for j in range(self.dim):
-                if tile_name in self.var[i][j]:
+                print(self.var[i][j])
+                if [tile_name] in self.var[i][j]:
                     return (i, j)
         return ("Var Not in Grid")
 
@@ -154,7 +157,7 @@ class Grid2048():
             raise ValueError("Coordinates out of range. Coordinates must be in the range (0,%s) " %self.dim)
         if not self.checkName(tile_name):
             raise ValueError("Cannot name tile. Tile name \"%s\" already exists " %tile_name)
-        self.var[x][y].append(tile_name)
+        self.var[x][y].append([tile_name])
         print('2048> Variable {} is currently assigned to coordinates ({},{})'.format(tile_name,x_cord,y_cord))
     
     def query(self, signal, info):
@@ -164,7 +167,9 @@ class Grid2048():
             if not self.checkCord(x_cord) or not self.checkCord(y_cord):
                 raise ValueError("Coordinates out of range. Coordinates must be in the range (0,%s) " %self.dim)
         else:
+            print(info)
             x_cord, y_cord = self.findVarSlot(info[0])
+            print(x_cord,y_cord)
         return self.grid[x_cord][y_cord]
 
     def play(self,arg_list):
@@ -184,7 +189,7 @@ class Grid2048():
             info = arg_list[1:]
             val = self.query(signal, info)
             if len(info) == 1:
-                print('Value stored in {} is {}'.format(info[0], val))
+                print('Value stored in {} is {}'.format(info, val))
             else:
                 print('Value stored in {} is {}'.format(info, val))
 #            for i in range(self.dim):
