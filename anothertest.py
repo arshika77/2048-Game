@@ -1,12 +1,12 @@
-x = []
+from copy import deepcopy
+#x = []
 
 #x[2][3] = 1
 
 #print(x[0][1])
+temp_var = []
 l = []
 for i in range(4):
-    l.append([])
-for i in range(4):
-    x.append(l)
+    temp_var.append(deepcopy(l))
 
-print(x[1][1])
+print(temp_var[0][0])

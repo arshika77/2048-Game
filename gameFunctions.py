@@ -33,18 +33,21 @@ class Grid2048():
 
             temp = []
             temp_var = []
+#            l = []
+#            for i in range(self.dim):
+#                temp_var.append(deepcopy(l))
 
             for j in self.grid[i]:
                 if j != '0':
                     temp.append(j)
             for k in self.var[i]:
                 if k != []:
-                    temp_var.append(self.var[i][int(j)])
+                    temp_var.append([k])
 
             temp += ['0'] * self.grid[i].count('0')
             l = []
             temp_var += [deepcopy(l) for i in range(self.var[i].count([]))]
-            #print(temp_var)
+            print(temp_var)
 
             for j in range(len(temp) - 1):
                 if temp[j] == temp[j + 1] and temp[j] != '0' and temp[j + 1] != '0':
@@ -58,10 +61,10 @@ class Grid2048():
                         temp[j] = str(1)
 
                     temp[j + 1] = '0'
-                    temp_var[i][j].extend(deepcopy(temp_var[i][j+1]))
+                    temp_var[j].extend(deepcopy(temp_var[j+1]))
                     # if temp[j] == str(0):
                     #     self.var[i][j] = deepcopy([])
-                    temp_var[i][j+1] = deepcopy([])
+                    temp_var[j+1] = deepcopy([])
                     
 
             self.grid[i] = []
@@ -80,6 +83,8 @@ class Grid2048():
         for i in range(4 - dir): 
             self.grid = self.rotate('grid')
             self.var = self.rotate('var')
+
+        print(self.var)
 
     # Checks the coordinates of the tile
     def checkCord(self,x):
@@ -116,7 +121,7 @@ class Grid2048():
         if add_type == 'normal':
             x = random.randint(0, self.dim-1)
             y = random.randint(0, self.dim-1)
-            print(x,y)
+            #print(x,y)
             if self.grid[x][y] != '0':
                 x, y, self.lost = self.findEmptySlot()
             if not self.lost: 
