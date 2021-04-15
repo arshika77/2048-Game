@@ -4,6 +4,7 @@ import sys
 from gameFunctions import Grid2048
 
 def print_to_stderr(flagVal):
+    print("2048> STDERR OUTPUT: ",end='',file = sys.stderr)
     if flagVal == 0:
         for i in game.grid:
             for j in i:
@@ -19,9 +20,11 @@ def print_to_stderr(flagVal):
                         else:
                             print(tile_name,end='',file = sys.stderr)
                     print(" ",end='',file = sys.stderr)
+        
+        print("\n",file=sys.stderr)
     else:
         print(-1,end='',file=sys.stderr)
-
+        print("\n",file=sys.stderr)
 
 game = Grid2048(4)
 game.addNumber('normal')
@@ -47,7 +50,6 @@ while True:
         print("Command executed. New state of the grid is: ")
         game.printGrid()
         print_to_stderr(0)
-        print('\n')
     except ValueError as e:
         print("2048> Error: ",e)
         print_to_stderr(1)
