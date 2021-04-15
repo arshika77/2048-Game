@@ -96,7 +96,7 @@ class Grid2048():
     def checkName(self,tile_name):
         for i in range(self.dim):
             for j in range(self.dim):
-                if tile_name in self.var[i][j]:
+                if [tile_name] in self.var[i][j]:
                     return False
         return True
 
